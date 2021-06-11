@@ -187,17 +187,19 @@ public class TreeConstructionAndOperation{
 	}
 
 	// Root to Node Path  With Return Type
-	public static boolean rootToNode(Node root, int data, ArrayList<Node> ans){
-		if(root == null)
-			return false;
+	// Important Question
+    // Path of Node from Root
+    // i.e. Root to Node Path
+    public static boolean rootToNodePath(Node root, int data, ArrayList<Node> ans) {
+        if (root == null)
+            return false;
+        boolean res = (root.data == data) || rootToNodePath(root.left, data, ans)
+                || rootToNodePath(root.right, data, ans);
 
-		boolean res = (root.data == data) || rootToNode(root.left, data, ans) || rootToNode(root.right, data, ans);
-
-		if(res)
-			ans.add(root);
-
-		return res;
-	}
+        if (res)
+            ans.add(root);
+        return res;
+    }
 
     // Print the K th Node in the depth in Binary Tree
     public static void printAtKthDepth(Node root, int k, ArrayList<Integer> ans) {
@@ -213,7 +215,40 @@ public class TreeConstructionAndOperation{
         printAtKthDepth(root.right, k - 1, ans);
     }
 
+    public static void printAtDepthK(Node root, Node block, int k, ArrayList<Integer> ans) {
+        if (root == null || root == block || k < 0)
+            return;
 
+        if (k == 0) {
+            ans.add(root.data);
+            return;
+        }
+
+        printAtDepthK(root.left, block, k - 1, ans);
+        printAtDepthK(root.right, block, k - 1, ans);
+    }
+
+
+    // MOST IMPORTANT QUESTION
+    // All Nodes Distance K in Binary Tree
+    public static ArrayList<Node> distanceK(Node root, Node target, int K){
+        ArrayList<Node> path = new ArrayList<>();
+        rootToNodePath(root, target.data, path);
+
+		Node block = null;
+        ArrayList<Integer> ans = new ArrayList<>();
+        for (int i = 0; i < path.size(); i++) {
+            printAtDepthK(path.get(i), block, k - i, ans);
+            block = path.get(i);
+        }
+
+        return ans;
+
+
+    }
+
+
+    // IMPORTANT
 	// BFS => Level Order Traversal
 	public static void BSF(Node root){
 		int level = 0;
