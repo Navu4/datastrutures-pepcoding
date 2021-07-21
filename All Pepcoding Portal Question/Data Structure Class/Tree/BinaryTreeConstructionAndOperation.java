@@ -279,6 +279,57 @@ public class TreeConstructionAndOperation{
 
 
 
+	// Print Single Child Nodes
+	public static void printSingleChildNodes(Node node, Node parent) {
+        if (node == null)
+            return;
+        if (parent != null && (parent.left == null || parent.right == null)) {
+            System.out.println(node.data);
+        }
+
+        printSingleChildNodes(node.left, node);
+        printSingleChildNodes(node.right, node);
+    }
+
+
+    // Remove Leaf Node from Tree
+    public static Node removeLeaves(Node node) {
+        if (node == null)
+            return null;
+        if (node.left == null && node.right == null)
+            return null;
+
+        node.left = removeLeaves(node.left);
+        node.right = removeLeaves(node.right);
+        return node;
+
+    }
+
+
+    // Lowest Common Ancestor of a Binary Tree
+    public static Node LCA(Node node, int p, int q) {
+        ArrayList<Node> list1 = new ArrayList<>();
+        ArrayList<Node> list2 = new ArrayList<>();
+
+        rootToNodePath(node, p, list1);
+        rootToNodePath(node, q, list2);
+
+        int i = list1.size() - 1;
+        int j = list2.size() - 1;
+
+        Node lca = null;
+        while (i >= 0 && j >= 0) {
+            if (list1.get(i) != list2.get(j))
+                break;
+
+            lca = list1.get(i);
+            i--;
+            j--;
+        }
+
+        return lca;
+    }
+
 	public static void main(String[] args) {
         Integer[] arr = { 50, 25, 12, null, null, 37, 30, null, null, null, 75, 62, null, 70, null, null, 87, null,
                 null };
