@@ -45,7 +45,8 @@ public class l001recusion {
         return x * power(x,n-1);
     }
 
-    public static int logPower(int x, int n) {
+    public static int logPower(int x￼
+Feb, int n) {
         if(n==-1)
             return 1/x;
         if(n==0)
